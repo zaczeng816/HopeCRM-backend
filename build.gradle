@@ -22,8 +22,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.hibernate:hibernate-core:6.1.7.Final'
     implementation 'org.slf4j:slf4j-api:+'
-    implementation 'org.apache.derby:derby:10.16.1.1'
-    implementation 'org.apache.derby:derbytools:10.16.1.1'
+    implementation 'org.apache.derby:derby:10.15.2.0'
+    implementation 'org.apache.derby:derbytools:10.15.2.0'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
