@@ -1,6 +1,6 @@
-package com.hopefund.crm.repository;
+package com.hopefund.crm.repositories;
 
-import com.hopefund.crm.entity.User;
+import com.hopefund.crm.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
