@@ -1,3 +1,6 @@
+### Derby ###
+db/
+derby.log
 ### Gradle ###
 .gradle
 build/

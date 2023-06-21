@@ -2,9 +2,10 @@ package com.hopefund.crm.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "client")
+@Table(name = "CLIENT")
 public class Client {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,10 +19,10 @@ public class Client {
         private ClientStatus status;
         private String address;
         @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-        private List<Appointment> appointments;
+        private Set<Appointment> appointments;
         private String note;
-        @ManyToMany
-        private List<Client> associations;
+        @ManyToMany(mappedBy = "client")
+        private Set<Client> friends;
 
 
         public enum ClientType {

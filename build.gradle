@@ -20,10 +20,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.hibernate:hibernate-core:5.6.2.Final'
+    implementation 'org.hibernate:hibernate-core:6.1.7.Final'
     implementation 'org.slf4j:slf4j-api:+'
+    implementation 'org.apache.derby:derby'
+    implementation 'org.apache.derby:derbytools'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.apache.derby:derby'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

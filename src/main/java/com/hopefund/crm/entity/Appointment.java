@@ -1,17 +1,20 @@
 package com.hopefund.crm.entity;
 
-import jakarta.persistence.*;
+import com.hopefund.crm.entity.Client;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "appointment")
+@Table(name = "APPOINTMENT")
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long clientId;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
     private LocalDateTime time;
     @ElementCollection
     private List<Duration> notifications;
