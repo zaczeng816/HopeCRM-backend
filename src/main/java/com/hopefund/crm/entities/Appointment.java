@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.hopefund.crm.entities.enums.AppointmentStatus;
 import jakarta.persistence.*;
 
@@ -25,6 +26,7 @@ public class Appointment {
     public void setId(long id) { this.id = id; }
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "client_id", nullable = false)
     public Client getClient(){ return client; }
     public void setClient( Client client ){ this.client = client; }

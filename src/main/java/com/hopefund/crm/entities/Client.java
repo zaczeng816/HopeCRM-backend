@@ -1,13 +1,18 @@
 package com.hopefund.crm.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.hopefund.crm.entities.enums.ClientStatus;
 import com.hopefund.crm.entities.enums.ClientType;
 import jakarta.persistence.*;
-import java.util.Set;
 
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "client")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Client {
         private long id;
         private String name;
@@ -17,8 +22,26 @@ public class Client {
         private ClientStatus status;
         private String address;
         private Set<Appointment> appointments;
+        private LocalDateTime lastCheckinTime;
         private String note;
         private Set<Client> friends;
+
+        public Client() {}
+        public Client(String name, long phone, String wechatId, ClientType type, ClientStatus status, String address, String note){
+                this.name = name;
+                this.phone = phone;
+                this.wechatId = wechatId;
+                this.type = type;
+                this.status = status;
+                this.address = address;
+                this.note = note;
+                this.appointments = new HashSet<>();
+                this.friends = new HashSet<>();
+        }
+        public String toString(){
+                return "Client: " + this.name + ", " + this.phone + ", " + this.wechatId + ", " + this.type + ", " + this.status + ", " + this.address + ", " + this.note;
+        }
+
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         public long getId() { return id; }
@@ -51,6 +74,7 @@ public class Client {
         public void setAddress(String address){ this.address = address; }
 
         @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+        @JsonManagedReference
         public Set<Appointment> getAppointments(){ return appointments; }
         public void setAppointments(Set<Appointment> appointments){ this.appointments = appointments; }
 
@@ -66,12 +90,8 @@ public class Client {
         )
         public Set<Client> getFriends(){ return friends; }
         public void setFriends(Set<Client> friends){ this.friends = friends; }
+
+        @Column(name = "last_checkin_time")
+        public LocalDateTime getLastCheckinTime(){ return lastCheckinTime; }
+        public void setLastCheckinTime(LocalDateTime lastCheckinTime){ this.lastCheckinTime = lastCheckinTime; }
 }
-
-
-
-
-
-
-
-

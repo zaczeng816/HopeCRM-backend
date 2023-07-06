@@ -1,7 +1,6 @@
 package com.hopefund.crm.entities;
 
 import jakarta.persistence.*;
-
 @Entity
 @Table(name = "users")
 public class User {
