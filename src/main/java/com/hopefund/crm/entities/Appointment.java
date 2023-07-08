@@ -2,6 +2,7 @@ package com.hopefund.crm.entities;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -11,19 +12,19 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "appointment")
 public class Appointment {
-    private long id;
+    private Long id;
     private Client client;
     private LocalDateTime time;
-    private List<Duration> notifications;
-    private AppointmentStatus status;
-    private String personInCharge;
-    private String note;
-    private String comment;
+    private List<Duration> notifications = new ArrayList<>();
+    private AppointmentStatus status = AppointmentStatus.APPOINTED;
+    private String personInCharge = "";
+    private String note = "";
+    private String comment = "";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     @ManyToOne
     @JsonBackReference

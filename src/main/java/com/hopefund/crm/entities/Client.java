@@ -14,20 +14,20 @@ import java.util.*;
 @Table(name = "client")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Client {
-        private long id;
+        private Long id;
         private String name;
-        private long phone;
+        private Long phone;
         private String wechatId;
-        private ClientType type;
-        private ClientStatus status;
+        private ClientType type = ClientType.POTENTIAL;
+        private ClientStatus status = ClientStatus.JOINED;
         private String address;
-        private Set<Appointment> appointments;
-        private LocalDateTime lastCheckinTime;
+        private List<Appointment> appointments = new ArrayList<>();
+        private LocalDateTime lastFollowupTime;
         private String note;
-        private Set<Client> friends;
+        private List<Client> friends = new ArrayList<>();
 
         public Client() {}
-        public Client(String name, long phone, String wechatId, ClientType type, ClientStatus status, String address, String note){
+        public Client(String name, Long phone, String wechatId, ClientType type, ClientStatus status, String address, String note){
                 this.name = name;
                 this.phone = phone;
                 this.wechatId = wechatId;
@@ -35,8 +35,8 @@ public class Client {
                 this.status = status;
                 this.address = address;
                 this.note = note;
-                this.appointments = new HashSet<>();
-                this.friends = new HashSet<>();
+                this.appointments = new ArrayList<>();
+                this.friends = new ArrayList<>();
         }
         public String toString(){
                 return "Client: " + this.name + ", " + this.phone + ", " + this.wechatId + ", " + this.type + ", " + this.status + ", " + this.address + ", " + this.note;
@@ -44,16 +44,16 @@ public class Client {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        public long getId() { return id; }
-        public void setId(long id){this.id = id;}
+        public Long getId() { return id; }
+        public void setId(Long id){this.id = id;}
 
         @Column(name = "name", nullable = false)
         public String getName(){ return name; }
         public void setName(String name){ this.name = name; }
 
         @Column(name = "phone", nullable = false)
-        public long getPhone(){ return phone; }
-        public void setPhone(long phone){ this.phone = phone; }
+        public Long getPhone(){ return phone; }
+        public void setPhone(Long phone){ this.phone = phone; }
 
         @Column(name = "wechat_id", nullable = false)
         public String getWechatId(){ return wechatId; }
@@ -75,8 +75,8 @@ public class Client {
 
         @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
         @JsonManagedReference
-        public Set<Appointment> getAppointments(){ return appointments; }
-        public void setAppointments(Set<Appointment> appointments){ this.appointments = appointments; }
+        public List<Appointment> getAppointments(){ return appointments; }
+        public void setAppointments(List<Appointment> appointments){ this.appointments = appointments; }
 
         @Column(name = "note")
         public String getNote(){ return note; }
@@ -88,10 +88,10 @@ public class Client {
                 joinColumns = @JoinColumn(name = "client_id"),
                 inverseJoinColumns = @JoinColumn(name = "friend_id")
         )
-        public Set<Client> getFriends(){ return friends; }
-        public void setFriends(Set<Client> friends){ this.friends = friends; }
+        public List<Client> getFriends(){ return friends; }
+        public void setFriends(List<Client> friends){ this.friends = friends; }
 
-        @Column(name = "last_checkin_time")
-        public LocalDateTime getLastCheckinTime(){ return lastCheckinTime; }
-        public void setLastCheckinTime(LocalDateTime lastCheckinTime){ this.lastCheckinTime = lastCheckinTime; }
+        @Column(name = "last_followup_time")
+        public LocalDateTime getLastFollowupTime(){ return lastFollowupTime; }
+        public void setLastFollowupTime(LocalDateTime lastCheckinTime){ this.lastFollowupTime = lastCheckinTime; }
 }
