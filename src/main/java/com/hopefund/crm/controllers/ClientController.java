@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -37,16 +38,21 @@ public class ClientController {
         Client client = clientService.getClientById(id);
         return ResponseEntity.ok(client);
     }
-
-
     @GetMapping("/getAll")
     public ResponseEntity<List<ClientDTO>> getAllClientDTOs() {
         List<ClientDTO> clients = clientService.getAllClientDTOs();
         return ResponseEntity.ok(clients);
+    }
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteClient(@RequestBody Long id) {
+        clientService.deleteClient(id);
+        return ResponseEntity.ok("Client deleted");
     }
     @GetMapping("/all")
     public ResponseEntity<List<Client>> getAll(){
         List<Client> clients = clientService.getAllClients();
         return ResponseEntity.ok(clients);
     }
+
+
 }

@@ -1,6 +1,6 @@
 package com.hopefund.crm.controllers;
 
-import com.hopefund.crm.DTO.NewAppointmentDTO;
+import com.hopefund.crm.DTO.AppointmentDTO;
 import com.hopefund.crm.entities.Appointment;
 import com.hopefund.crm.services.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,14 @@ public class AppointmentController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Appointment> createAppointment(@RequestBody NewAppointmentDTO newAppointment) {
+    public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentDTO newAppointment) {
         Appointment createdAppointment = appointmentService.createAppointment(newAppointment);
         return ResponseEntity.ok(createdAppointment);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<Appointment> editAppointment(@RequestBody AppointmentDTO dto) {
+        Appointment updatedAppointment = appointmentService.editAppointment(dto);
+        return ResponseEntity.ok(updatedAppointment);
     }
 }

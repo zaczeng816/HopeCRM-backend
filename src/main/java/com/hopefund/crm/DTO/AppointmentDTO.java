@@ -4,10 +4,12 @@ import com.hopefund.crm.entities.enums.AppointmentStatus;
 
 import java.time.LocalDateTime;
 
-public record NewAppointmentDTO (
+public record AppointmentDTO(
+        Long id,
         Long clientId,
         LocalDateTime time,
         AppointmentStatus status,
         String personInCharge,
-        String note){
+        String note,
+        String comment){
 }

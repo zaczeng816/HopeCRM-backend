@@ -1,6 +1,6 @@
 package com.hopefund.crm.services;
 
-import com.hopefund.crm.DTO.NewAppointmentDTO;
+import com.hopefund.crm.DTO.AppointmentDTO;
 import com.hopefund.crm.entities.Appointment;
 import com.hopefund.crm.entities.Client;
 import com.hopefund.crm.entities.enums.AppointmentStatus;
@@ -8,7 +8,6 @@ import com.hopefund.crm.entities.enums.ClientType;
 import com.hopefund.crm.repositories.AppointmentRepository;
 import com.hopefund.crm.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -31,7 +30,7 @@ public class AppointmentService {
         this.clientRepository = clientRepository;
     }
 
-    public Appointment createAppointment(NewAppointmentDTO newAppointment) {
+    public Appointment createAppointment(AppointmentDTO newAppointment) {
         Client client = clientRepository.findById(newAppointment.clientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Client", "id",  newAppointment.clientId()));
         client.setType(ClientType.REAL);
@@ -42,6 +41,27 @@ public class AppointmentService {
         appointment.setPersonInCharge(newAppointment.personInCharge());
         appointment.setNote(newAppointment.note());
         return appointmentRepository.save(appointment);
+    }
+
+    public Appointment editAppointment(AppointmentDTO dto){
+        if(appointmentRepository.existsById(dto.id())){
+            Appointment appointment = appointmentRepository.findById(dto.id()).get();
+            appointment.setTime(dto.time());
+            appointment.setStatus(dto.status());
+            appointment.setPersonInCharge(dto.personInCharge());
+            appointment.setNote(dto.note());
+            appointment.setComment(dto.comment());
+            return appointmentRepository.save(appointment);
+        } else {
+            throw new RuntimeException("Appointment not found");
+        }
+    }
+    public void deleteAppointment(Long id){
+        if(appointmentRepository.existsById(id)){
+            appointmentRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Appointment not found");
+        }
     }
     public Appointment getMostRecentUncompletedAppointment(Client client) {
         List<Appointment> appointments = client.getAppointments();
