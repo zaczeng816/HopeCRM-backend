@@ -3,12 +3,16 @@ package com.hopefund.crm.services;
 import com.hopefund.crm.DTO.NewAppointmentDTO;
 import com.hopefund.crm.entities.Appointment;
 import com.hopefund.crm.entities.Client;
+import com.hopefund.crm.entities.enums.AppointmentStatus;
 import com.hopefund.crm.entities.enums.ClientType;
 import com.hopefund.crm.repositories.AppointmentRepository;
 import com.hopefund.crm.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class AppointmentService {
@@ -27,10 +31,6 @@ public class AppointmentService {
         this.clientRepository = clientRepository;
     }
 
-    public Appointment createAppointment(Appointment appointment) {
-        return appointmentRepository.save(appointment);
-    }
-
     public Appointment createAppointment(NewAppointmentDTO newAppointment) {
         Client client = clientRepository.findById(newAppointment.clientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Client", "id",  newAppointment.clientId()));
@@ -43,5 +43,14 @@ public class AppointmentService {
         appointment.setNote(newAppointment.note());
         return appointmentRepository.save(appointment);
     }
+    public Appointment getMostRecentUncompletedAppointment(Client client) {
+        List<Appointment> appointments = client.getAppointments();
+        return appointments.stream()
+                .filter(appointment -> appointment.getStatus() != AppointmentStatus.COMPLETED)
+                .max(Comparator.comparing(Appointment::getTime))
+                .orElse(null);
+    }
+
+
 }
 

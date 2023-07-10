@@ -16,7 +16,7 @@ import java.util.*;
 public class Client {
         private Long id;
         private String name;
-        private Long phone;
+        private String phone;
         private String wechatId;
         private ClientType type = ClientType.POTENTIAL;
         private ClientStatus status = ClientStatus.JOINED;
@@ -27,7 +27,7 @@ public class Client {
         private List<Client> friends = new ArrayList<>();
 
         public Client() {}
-        public Client(String name, Long phone, String wechatId, ClientType type, ClientStatus status, String address, String note){
+        public Client(String name, String phone, String wechatId, ClientType type, ClientStatus status, String address, String note){
                 this.name = name;
                 this.phone = phone;
                 this.wechatId = wechatId;
@@ -51,11 +51,11 @@ public class Client {
         public String getName(){ return name; }
         public void setName(String name){ this.name = name; }
 
-        @Column(name = "phone", nullable = false)
-        public Long getPhone(){ return phone; }
-        public void setPhone(Long phone){ this.phone = phone; }
+        @Column(name = "phone", nullable = true)
+        public String getPhone(){ return phone; }
+        public void setPhone(String phone){ this.phone = phone; }
 
-        @Column(name = "wechat_id", nullable = false)
+        @Column(name = "wechat_id", nullable = true)
         public String getWechatId(){ return wechatId; }
         public void setWechatId(String wechatId){ this.wechatId = wechatId; }
 

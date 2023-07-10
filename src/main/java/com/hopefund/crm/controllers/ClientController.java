@@ -1,5 +1,6 @@
 package com.hopefund.crm.controllers;
 
+import com.hopefund.crm.DTO.ClientDTO;
 import com.hopefund.crm.entities.Client;
 import com.hopefund.crm.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,12 @@ public class ClientController {
 
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Client>> getAllClients() {
+    public ResponseEntity<List<ClientDTO>> getAllClientDTOs() {
+        List<ClientDTO> clients = clientService.getAllClientDTOs();
+        return ResponseEntity.ok(clients);
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Client>> getAll(){
         List<Client> clients = clientService.getAllClients();
         return ResponseEntity.ok(clients);
     }

@@ -12,7 +12,7 @@ public class CorsConfiguration {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings( CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:3000") // Or whichever domain your React app is served from
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
