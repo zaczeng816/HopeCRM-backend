@@ -19,14 +19,14 @@ public class AppointmentController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentDTO newAppointment) {
-        Appointment createdAppointment = appointmentService.createAppointment(newAppointment);
-        return ResponseEntity.ok(createdAppointment);
+    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO dto) {
+        Appointment createdAppointment = appointmentService.createAppointment(dto);
+        return ResponseEntity.ok(new AppointmentDTO(createdAppointment));
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Appointment> editAppointment(@RequestBody AppointmentDTO dto) {
+    public ResponseEntity<AppointmentDTO> editAppointment(@RequestBody AppointmentDTO dto) {
         Appointment updatedAppointment = appointmentService.editAppointment(dto);
-        return ResponseEntity.ok(updatedAppointment);
+        return ResponseEntity.ok(new AppointmentDTO(updatedAppointment));
     }
 }

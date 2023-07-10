@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.hopefund.crm.entities.enums.AppointmentStatus;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "appointment")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Appointment {
     private Long id;
     private Client client;

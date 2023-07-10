@@ -30,16 +30,20 @@ public class AppointmentService {
         this.clientRepository = clientRepository;
     }
 
-    public Appointment createAppointment(AppointmentDTO newAppointment) {
-        Client client = clientRepository.findById(newAppointment.clientId())
-                .orElseThrow(() -> new ResourceNotFoundException("Client", "id",  newAppointment.clientId()));
+    public Appointment createAppointment(AppointmentDTO dto) {
+        Client client = clientRepository.findById(dto.clientId())
+                .orElseThrow(() -> new ResourceNotFoundException("Client", "id",  dto.clientId()));
         client.setType(ClientType.REAL);
         Appointment appointment = new Appointment();
         appointment.setClient(client);
-        appointment.setTime(newAppointment.time());
-        appointment.setStatus(newAppointment.status());
-        appointment.setPersonInCharge(newAppointment.personInCharge());
-        appointment.setNote(newAppointment.note());
+        appointment.setTime(dto.time());
+        appointment.setStatus(dto.status());
+        appointment.setPersonInCharge(dto.personInCharge());
+        appointment.setNote(dto.note());
+        return appointmentRepository.save(appointment);
+    }
+
+    public Appointment createAppointment(Appointment appointment){
         return appointmentRepository.save(appointment);
     }
 
