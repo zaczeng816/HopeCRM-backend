@@ -1,7 +1,7 @@
 package com.hopefund.crm.entities;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +17,12 @@ import jakarta.persistence.*;
 public class Appointment {
     private Long id;
     private Client client;
-    private LocalDateTime time;
+    private ZonedDateTime time;
     private List<Duration> notifications = new ArrayList<>();
     private AppointmentStatus status = AppointmentStatus.APPOINTED;
     private String personInCharge = "";
+    private String title = "";
     private String note = "";
-    private String comment = "";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -36,8 +36,8 @@ public class Appointment {
     public void setClient( Client client ){ this.client = client; }
 
     @Column(name = "time", nullable = false)
-    public LocalDateTime getTime() { return time; }
-    public void setTime(LocalDateTime time) { this.time = time; }
+    public ZonedDateTime getTime() { return time; }
+    public void setTime(ZonedDateTime time) { this.time = time; }
 
     @ElementCollection
     @CollectionTable(name = "notification", joinColumns = @JoinColumn(name = "appointment_id"))
@@ -54,11 +54,11 @@ public class Appointment {
     public String getPersonInCharge() { return personInCharge; }
     public void setPersonInCharge(String personInCharge) { this.personInCharge = personInCharge; }
 
-    @Column(name = "note")
-    public String getNote() { return note; }
-    public void setNote(String note) { this.note = note; }
+    @Column(name = "title")
+    public String getTitle() { return title; }
+    public void setTitle(String note) { this.title = note; }
 
-    @Column(name = "comment")
-    public String getComment() { return comment; }
-    public void setComment(String comment) { this.comment = comment; }
+    @Column(name = "note", length=500)
+    public String getNote() { return note; }
+    public void setNote(String comment) { this.note = comment; }
 }

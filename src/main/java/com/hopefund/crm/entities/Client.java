@@ -78,7 +78,7 @@ public class Client {
         public List<Appointment> getAppointments(){ return appointments; }
         public void setAppointments(List<Appointment> appointments){ this.appointments = appointments; }
 
-        @Column(name = "note")
+        @Column(name = "note", length=500)
         public String getNote(){ return note; }
         public void setNote(String note){ this.note = note; }
 

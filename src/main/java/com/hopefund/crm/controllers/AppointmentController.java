@@ -1,9 +1,11 @@
 package com.hopefund.crm.controllers;
 
 import com.hopefund.crm.DTO.AppointmentDTO;
+import com.hopefund.crm.DTO.IdNameDTO;
 import com.hopefund.crm.entities.Appointment;
 import com.hopefund.crm.services.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,4 +31,11 @@ public class AppointmentController {
         Appointment updatedAppointment = appointmentService.editAppointment(dto);
         return ResponseEntity.ok(new AppointmentDTO(updatedAppointment));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<Void> deleteAppointment(@RequestBody IdNameDTO dto) {
+        appointmentService.deleteAppointment(dto.id());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

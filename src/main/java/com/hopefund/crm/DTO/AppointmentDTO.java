@@ -3,16 +3,16 @@ package com.hopefund.crm.DTO;
 import com.hopefund.crm.entities.Appointment;
 import com.hopefund.crm.entities.enums.AppointmentStatus;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public record AppointmentDTO(
         Long id,
         Long clientId,
-        LocalDateTime time,
+        ZonedDateTime time,
         AppointmentStatus status,
         String personInCharge,
-        String note,
-        String comment){
+        String title,
+        String note){
     public AppointmentDTO(Appointment appointment){
         this(
                 appointment.getId(),
@@ -20,8 +20,8 @@ public record AppointmentDTO(
                 appointment.getTime(),
                 appointment.getStatus(),
                 appointment.getPersonInCharge(),
-                appointment.getNote(),
-                appointment.getComment()
+                appointment.getTitle(),
+                appointment.getNote()
         );
     }
 }

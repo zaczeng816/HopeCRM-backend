@@ -37,8 +37,10 @@ public class ClientService {
         }
     }
     public void deleteClient(Long id){
-        if(clientRepository.existsById(id)){
-            clientRepository.deleteById(id);
+        Optional<Client> op = clientRepository.findById(id);
+        if(op.isPresent()){
+            Client client = op.get();
+            clientRepository.deleteById(client.getId());
         } else {
             throw new RuntimeException("Client not found");
         }

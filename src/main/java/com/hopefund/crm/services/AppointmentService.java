@@ -10,6 +10,7 @@ import com.hopefund.crm.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class AppointmentService {
         appointment.setTime(dto.time());
         appointment.setStatus(dto.status());
         appointment.setPersonInCharge(dto.personInCharge());
-        appointment.setNote(dto.note());
+        appointment.setTitle(dto.title());
         return appointmentRepository.save(appointment);
     }
 
@@ -50,11 +51,20 @@ public class AppointmentService {
     public Appointment editAppointment(AppointmentDTO dto){
         if(appointmentRepository.existsById(dto.id())){
             Appointment appointment = appointmentRepository.findById(dto.id()).get();
+            Client client = appointment.getClient();
             appointment.setTime(dto.time());
             appointment.setStatus(dto.status());
             appointment.setPersonInCharge(dto.personInCharge());
+            appointment.setTitle(dto.title());
             appointment.setNote(dto.note());
-            appointment.setComment(dto.comment());
+            if(appointment.getStatus().equals(AppointmentStatus.FOLLOWING_UP) || appointment.getStatus().equals(AppointmentStatus.COMPLETED)){
+                client.setLastFollowupTime(LocalDateTime.now());
+                clientRepository.save(client);
+            }
+            if(client.getType().equals(ClientType.POTENTIAL)){
+                client.setType(ClientType.REAL);
+                clientRepository.save(client);
+            }
             return appointmentRepository.save(appointment);
         } else {
             throw new RuntimeException("Appointment not found");
