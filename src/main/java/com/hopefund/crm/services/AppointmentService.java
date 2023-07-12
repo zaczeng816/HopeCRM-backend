@@ -1,6 +1,7 @@
 package com.hopefund.crm.services;
 
 import com.hopefund.crm.DTO.AppointmentDTO;
+import com.hopefund.crm.DTO.IdStringDTO;
 import com.hopefund.crm.entities.Appointment;
 import com.hopefund.crm.entities.Client;
 import com.hopefund.crm.entities.enums.AppointmentStatus;
@@ -10,9 +11,10 @@ import com.hopefund.crm.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentService {
@@ -57,8 +59,8 @@ public class AppointmentService {
             appointment.setPersonInCharge(dto.personInCharge());
             appointment.setTitle(dto.title());
             appointment.setNote(dto.note());
-            if(appointment.getStatus().equals(AppointmentStatus.FOLLOWING_UP) || appointment.getStatus().equals(AppointmentStatus.COMPLETED)){
-                client.setLastFollowupTime(LocalDateTime.now());
+            if(appointment.getStatus().equals(AppointmentStatus.FOLLOWING_UP)){
+                client.setLastFollowupTime(ZonedDateTime.now());
                 clientRepository.save(client);
             }
             if(client.getType().equals(ClientType.POTENTIAL)){
@@ -70,6 +72,22 @@ public class AppointmentService {
             throw new RuntimeException("Appointment not found");
         }
     }
+
+    public Appointment completeAppointment(IdStringDTO dto){
+        Optional<Appointment> op = appointmentRepository.findById(dto.id());
+        if(op.isPresent()){
+            Appointment appointment = op.get();
+            appointment.setStatus(AppointmentStatus.COMPLETED);
+            appointment.setResult(dto.value());
+            Client client = appointment.getClient();
+            client.setLastFollowupTime(ZonedDateTime.now());
+            clientRepository.save(client);
+            return appointmentRepository.save(appointment);
+        } else {
+            throw new RuntimeException("Appointment not found");
+        }
+    }
+
     public void deleteAppointment(Long id){
         if(appointmentRepository.existsById(id)){
             appointmentRepository.deleteById(id);

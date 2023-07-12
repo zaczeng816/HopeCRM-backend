@@ -1,7 +1,7 @@
 package com.hopefund.crm.controllers;
 
 import com.hopefund.crm.DTO.ClientDTO;
-import com.hopefund.crm.DTO.IdNameDTO;
+import com.hopefund.crm.DTO.IdStringDTO;
 import com.hopefund.crm.entities.Client;
 import com.hopefund.crm.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -46,7 +45,7 @@ public class ClientController {
         return ResponseEntity.ok(clients);
     }
     @PostMapping("/delete")
-    public ResponseEntity<Void> deleteClient(@RequestBody IdNameDTO dto) {
+    public ResponseEntity<Void> deleteClient(@RequestBody IdStringDTO dto) {
         clientService.deleteClient(dto.id());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

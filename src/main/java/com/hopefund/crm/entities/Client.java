@@ -7,7 +7,7 @@ import com.hopefund.crm.entities.enums.ClientStatus;
 import com.hopefund.crm.entities.enums.ClientType;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @Entity
@@ -22,7 +22,7 @@ public class Client {
         private ClientStatus status = ClientStatus.JOINED;
         private String address;
         private List<Appointment> appointments = new ArrayList<>();
-        private LocalDateTime lastFollowupTime;
+        private ZonedDateTime lastFollowupTime;
         private String note;
         private List<Client> friends = new ArrayList<>();
 
@@ -92,6 +92,6 @@ public class Client {
         public void setFriends(List<Client> friends){ this.friends = friends; }
 
         @Column(name = "last_followup_time")
-        public LocalDateTime getLastFollowupTime(){ return lastFollowupTime; }
-        public void setLastFollowupTime(LocalDateTime lastCheckinTime){ this.lastFollowupTime = lastCheckinTime; }
+        public ZonedDateTime getLastFollowupTime(){ return lastFollowupTime; }
+        public void setLastFollowupTime(ZonedDateTime lastCheckinTime){ this.lastFollowupTime = lastCheckinTime; }
 }

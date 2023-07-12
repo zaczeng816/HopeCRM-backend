@@ -6,6 +6,7 @@ import com.hopefund.crm.entities.enums.ClientStatus;
 import com.hopefund.crm.entities.enums.ClientType;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public record ClientDTO (
      Long id,
@@ -16,7 +17,7 @@ public record ClientDTO (
      ClientStatus status,
      String address,
      Appointment appointment,
-     LocalDateTime lastFollowupTime,
+     ZonedDateTime lastFollowupTime,
      String note){
     public ClientDTO(Client client, Appointment appointment) {
         this(

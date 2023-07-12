@@ -12,7 +12,8 @@ public record AppointmentDTO(
         AppointmentStatus status,
         String personInCharge,
         String title,
-        String note){
+        String note,
+        String result){
     public AppointmentDTO(Appointment appointment){
         this(
                 appointment.getId(),
@@ -21,7 +22,8 @@ public record AppointmentDTO(
                 appointment.getStatus(),
                 appointment.getPersonInCharge(),
                 appointment.getTitle(),
-                appointment.getNote()
+                appointment.getNote(),
+                appointment.getResult()
         );
     }
 }

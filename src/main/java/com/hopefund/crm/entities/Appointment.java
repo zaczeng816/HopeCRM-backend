@@ -23,6 +23,7 @@ public class Appointment {
     private String personInCharge = "";
     private String title = "";
     private String note = "";
+    private String result = "";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -61,4 +62,8 @@ public class Appointment {
     @Column(name = "note", length=500)
     public String getNote() { return note; }
     public void setNote(String comment) { this.note = comment; }
+
+    @Column(name = "result")
+    public String getResult() { return result; }
+    public void setResult(String result) { this.result = result; }
 }
