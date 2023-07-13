@@ -1,5 +1,4 @@
 package com.hopefund.crm.services;
-
 import com.hopefund.crm.DTO.AppointmentDTO;
 import com.hopefund.crm.DTO.IdStringDTO;
 import com.hopefund.crm.entities.Appointment;
@@ -10,7 +9,6 @@ import com.hopefund.crm.repositories.AppointmentRepository;
 import com.hopefund.crm.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
