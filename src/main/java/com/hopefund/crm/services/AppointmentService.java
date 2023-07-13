@@ -43,6 +43,7 @@ public class AppointmentService {
         appointment.setStatus(dto.status());
         appointment.setPersonInCharge(dto.personInCharge());
         appointment.setTitle(dto.title());
+        appointment.setNote(dto.note());
         return appointmentRepository.save(appointment);
     }
 
