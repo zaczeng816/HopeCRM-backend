@@ -29,15 +29,22 @@ dependencies {
     testImplementation 'org.springframework.graphql:spring-graphql-test'
 }
 
+tasks.register('cleanReact', Delete) {
+    delete 'src/main/resources/static'
+}
 tasks.register('copyReact', Copy) {
     from '../HopeCRM/build'
     into 'src/main/resources/static'
 }
-
 tasks.named('build') {
     dependsOn 'copyReact'
 }
-
+tasks.named('jar') {
+    dependsOn 'copyReact'
+}
+tasks.named('clean'){
+    dependsOn 'cleanReact'
+}
 tasks.named('test') {
     useJUnitPlatform()
 }
